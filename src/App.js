@@ -1,6 +1,5 @@
 import { IndexRedirect, Router, Route, browserHistory } from 'react-router';
 import React, { Component } from 'react';
-import logo from '../public/Reddit-icon.png';
 import Home from './components/Home.jsx';
 import PIndex from './components/PIndex.jsx';
 import Post from './components/Post.jsx';
