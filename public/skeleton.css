@@ -460,6 +460,10 @@ there.
   z-index: 1;
 }
 
+.header-padding {
+  height: 6rem;
+}
+
 .header-title {
   display: inline;
 }

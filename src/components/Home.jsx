@@ -31,6 +31,7 @@ class Home extends Component {
             <h2 className="header-title">Reddit Reader</h2>
           </div>
         </div>
+        <div className="header-padding"></div>
         { childrenWithProps }
       </div>
     );
