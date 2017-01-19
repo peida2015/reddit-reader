@@ -3,6 +3,8 @@ import PostStore from '../stores/PostStore.js';
 import { Container } from 'flux/utils';
 import ApiUtil from '../ApiUtil.js';
 import logo from '../../public/Reddit-icon.png';
+import '../../public/normalize.css';
+import '../../public/skeleton.css';
 
 class Home extends Component {
   static getStores() {
