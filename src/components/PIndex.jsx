@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PostCard from './PostCard.jsx';
 
 class PIndex extends Component {
 
@@ -9,14 +10,13 @@ class PIndex extends Component {
   render () {
     // debugger
     let posts = this.props.posts.map((post)=>{
-      return post.data.title
+      return <PostCard key={ post.data.id } post={post} />
     })
     return (
-      <div>
-        <div>PIndex</div>
-        {
-          posts
-        }
+      <div className="container">
+        <div className="row">
+          { posts }
+        </div>
       </div>
     );
   }
