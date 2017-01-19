@@ -25,7 +25,12 @@ class Home extends Component {
 
     return (
       <div>
-        <h2>Reddit Reader</h2>
+        <div className="header">
+          <div className="centered">
+            <img className="logo-img" alt="logo" src={logo}/>
+            <h2 className="header-title">Reddit Reader</h2>
+          </div>
+        </div>
         { childrenWithProps }
       </div>
     );
