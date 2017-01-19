@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import linkLogo from '../../public/link.png';
 import commentLogo from '../../public/chat.png';
+import { Link } from 'react-router';
 
 class PostCard extends Component {
   componentWillMount() {
@@ -27,11 +28,16 @@ class PostCard extends Component {
   render () {
     let post = this.props.post.data;
     let thumbnail = this.thumbnailLink(post);
+    if (thumbnail !== commentLogo && thumbnail !== linkLogo) {
+      thumbnail = thumbnail.replace(/\&amp/g, "&").replace(/;/g,"");
+    };
 
     return (
       <div className="four columns thin-border post-card-height post-card-margin row-adjustment">
-        <img className="responsive-img" alt={`by: ${post.author}`} src={ thumbnail }/>
-        <div className="centered eighty-percent non-overflow">{post.title}</div>
+        <Link to={ post.url.replace(/\&amp/g, "&").replace(/;/g,"") } target="_blank">
+          <img className="responsive-img" alt={`by: ${post.author}`} src={ thumbnail }/>
+          <div className="centered eighty-percent non-overflow">{post.title}</div>
+        </Link>
       </div>
     );
   }
