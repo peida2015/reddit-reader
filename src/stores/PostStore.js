@@ -1,5 +1,6 @@
 import { ReduceStore } from 'flux/utils';
 import Dispatcher from '../Dispatcher';
+import Immutable from 'immutable';
 
 class PostStore extends ReduceStore {
   constructor () {
@@ -7,13 +8,13 @@ class PostStore extends ReduceStore {
   }
 
   getInitialState () {
-    return [];
+    return Immutable.Map();
   }
 
   reduce (state, action) {
     switch (action.type) {
-      case "POSTS_RECEIVED":
-        return state.concat(action.posts);
+      case "HOT_POSTS_RECEIVED":
+        return state.set(action.subreddit, action.posts);
 
       default:
       return state;
