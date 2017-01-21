@@ -9,7 +9,15 @@ class PIndex extends Component {
   }
 
   render () {
-    let posts = this.props.posts.map((post)=>{
+
+    let postsMap = this.props.posts.values();
+    let posts = [];
+
+    for (let postArray of postsMap) {
+      posts = posts.concat(postArray);
+    }
+
+    posts = posts.map((post)=>{
       return <PostCard key={ post.data.id } post={post} />
     })
 
