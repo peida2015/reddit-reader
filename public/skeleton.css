@@ -452,12 +452,16 @@ there.
   width: max-content;
 }
 
-.header {
+.fixed-space {
   position: fixed;
   height: 5rem;
   background-color: white;
   width: 100%;
   z-index: 1;
+}
+
+.header {
+  top: 0px;
 }
 
 .header-padding {
@@ -472,7 +476,29 @@ there.
   width: 80%;
 }
 
+.footer {
+  bottom: 0rem;
+}
+
 .non-overflow {
   height: 30%;
   overflow: hidden;
+}
+
+.small-label {
+  margin: auto 0.5rem;
+  background-color: lightgreen;
+  padding: auto 0.5rem;
+}
+
+.label-delete {
+  background-color: white;
+  color: white;
+  padding: 0.3rem;
+}
+
+.label-delete:hover {
+  cursor: pointer;
+  background-color: white;
+  color: red;
 }
