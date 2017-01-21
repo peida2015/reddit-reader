@@ -29,12 +29,12 @@ class PostCard extends Component {
     let post = this.props.post.data;
     let thumbnail = this.thumbnailLink(post);
     if (thumbnail !== commentLogo && thumbnail !== linkLogo) {
-      thumbnail = thumbnail.replace(/\&amp/g, "&").replace(/;/g,"");
+      thumbnail = thumbnail.replace(/&amp/g, "&").replace(/;/g,"");
     };
 
     return (
       <div className="four columns thin-border post-card-height post-card-margin row-adjustment">
-        <Link to={ post.url.replace(/\&amp/g, "&").replace(/;/g,"") } target="_blank">
+        <Link to={ post.url.replace(/&amp/g, "&").replace(/;/g,"") } target="_blank">
           <img className="responsive-img" alt={`by: ${post.author}`} src={ thumbnail }/>
           <div className="centered eighty-percent non-overflow">{post.title}</div>
         </Link>
