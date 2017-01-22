@@ -465,7 +465,7 @@ there.
 }
 
 .header-padding {
-  height: 6rem;
+  height: 5rem;
 }
 
 .header-title {
@@ -501,4 +501,30 @@ there.
   cursor: pointer;
   background-color: white;
   color: red;
+}
+
+.bottom-flash {
+  position: fixed;
+  bottom: 0px;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.bottom-flash-warning {
+  color: red;
+  background-color: yellow;
+}
+
+.bottom-flash-loading {
+  background-color: lightgreen;
+  color: #000000;
+  bottom: -2.3rem;
+  animation-name: slide-in-out;
+  animation-duration: 3s;
+}
+
+@keyframes slide-in-out {
+  0% { bottom: -2.3rem; }
+  50% { bottom: 0rem; }
+  100% { bottom: -2.3rem; }
 }
