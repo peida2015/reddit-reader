@@ -13,7 +13,15 @@ let SubredditActions = {
       type: "REMOVE_SUBREDDIT",
       subreddit: subreddit
     });
+  },
+
+  invalidSubreddit () {
+    Dispatcher.dispatch({
+      type: "INVALID_SUBREDDIT"
+    });
   }
+
+
 };
 
 export default SubredditActions;
