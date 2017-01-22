@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-// import PostActions from '../actions/PostActions.js';
-// import { Container } from 'flux/utils';
 
 class Label extends Component {
 
