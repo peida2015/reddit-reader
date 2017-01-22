@@ -22,7 +22,8 @@ let ApiActions = {
     });
   },
 
-  receivePosts (listing) {
+  receivePosts (listing, groupReq) {
+    // debugger
     if (listing !== null) {
       let subreddit = listing.data.children[0].data.subreddit
       Dispatcher.dispatch({
@@ -32,13 +33,16 @@ let ApiActions = {
       });
 
       SubredditActions.addSubreddit(subreddit);
-    } else {
+      Dispatcher.dispatch({
+        type: "API_RESPONDED"
+      });
+    } else if (!groupReq){
       SubredditActions.invalidSubreddit();
+      Dispatcher.dispatch({
+        type: "API_RESPONDED"
+      });
     };
 
-    Dispatcher.dispatch({
-      type: "API_RESPONDED"
-    });
   }
 };
 

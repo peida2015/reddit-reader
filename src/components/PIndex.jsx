@@ -5,7 +5,28 @@ import PostCard from './PostCard.jsx';
 class PIndex extends Component {
 
   componentWillMount() {
-    this.props.fetchPosts();
+    if (this.props.params.subreddits) {
+      let subreddits = this.parseSubredditsParams(this.props.params.subreddits);
+      for (let idx in subreddits) {
+        if (subreddits[idx] === "") {
+          continue;
+        }
+        this.props.fetchPosts(subreddits[idx], true);
+      };
+    } else {
+      this.props.fetchPosts();
+    }
+  }
+
+  parseSubredditsParams (subredditsParam) {
+    let subreddits = subredditsParam.split("+");
+    if (subreddits.length > 1) {
+      return subreddits;
+    }
+
+    let subreddits2 = decodeURIComponent(subredditsParam).split(",");
+
+    return subreddits.length < subreddits2.length ? subreddits2 : subreddits;
   }
 
   shouldComponentUpdate (nextProps, nextState) {
