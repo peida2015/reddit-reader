@@ -14,10 +14,10 @@ class SubredditStore extends ReduceStore {
   reduce (state, action) {
     switch (action.type) {
       case "ADD_SUBREDDIT":
-        return state.add(action.subreddit);
+        return state.add(action.subreddit.toLowerCase());
 
       case "REMOVE_SUBREDDIT":
-        return state.delete(action.subreddit);
+        return state.delete(action.subreddit.toLowerCase());
 
       default:
       return state;
