@@ -94,8 +94,8 @@ class Home extends Component {
         {/* header end  */}
         <div className="header fixed-space">
           <div className="centered">
-            <img className="logo-img" alt="logo" src={logo}/>
-            <h2 className="header-title">Reddit Reader</h2>
+            <img className="logo-img vertically-align" alt="logo" src={logo}/>
+            <h2 className="header-title vertically-align">Reddit Reader</h2>
           </div>
         </div>
         {/* header end  */}
