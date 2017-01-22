@@ -13,6 +13,11 @@ let SubredditActions = {
       type: "REMOVE_SUBREDDIT",
       subreddit: subreddit
     });
+
+    Dispatcher.dispatch({
+      type: "REMOVE_POSTS",
+      subreddit: subreddit
+    })
   },
 
   invalidSubreddit () {

@@ -8,6 +8,17 @@ class PIndex extends Component {
     this.props.fetchPosts();
   }
 
+  shouldComponentUpdate (nextProps, nextState) {
+    return this.props.subreddits !== nextProps.subreddits ||
+          this.props.posts !== nextProps.posts;
+  }
+
+  componentWillUpdate(nextProps) {
+    if (nextProps.subreddits.size === 0 && !this.props.apistatus) {
+      this.props.fetchPosts();
+    }
+  }
+
   render () {
 
     let postsMap = this.props.posts.values();

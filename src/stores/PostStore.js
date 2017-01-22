@@ -19,10 +19,13 @@ class PostStore extends ReduceStore {
       case "POSTS_RECEIVED":
         if (state.get("HOT")) {
           let blankMap = state.clear();
-          return blankMap.set(action.subreddit, action.posts);
+          return blankMap.set(action.subreddit.toLowerCase(), action.posts);
         } else {
-          return state.set(action.subreddit, action.posts);
+          return state.set(action.subreddit.toLowerCase(), action.posts);
         }
+
+      case "REMOVE_POSTS":
+        return state.delete(action.subreddit);
 
       default:
       return state;

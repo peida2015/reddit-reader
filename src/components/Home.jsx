@@ -50,6 +50,11 @@ class Home extends Component {
     });
   }
 
+  handleDeletion(subreddit) {
+    this.setState({ lastEntered: "" });
+    SubredditActions.removeSubreddit(subreddit);
+  }
+
   flashMessage () {
     let flashMessage;
     if (this.state.lastEntered === "") {
@@ -77,7 +82,7 @@ class Home extends Component {
       return (
         <Label  key={subreddit} subreddit={subreddit}
           removeAction={
-            SubredditActions.removeSubreddit.bind(this, subreddit)
+            this.handleDeletion.bind(this, subreddit)
           }/>
       )
     });
@@ -109,7 +114,7 @@ class Home extends Component {
             <div className="one columns">
               <input className="button-primary"  type="submit"  value="Add"/>
             </div>
-            <div className="six columns thin-border">
+            <div className="six columns thin-border header-padding">
               { subreddits }
             </div>
           </form>
