@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PostStore from '../stores/PostStore.js';
 import SubredditStore from '../stores/SubredditStore.js';
+import ApiStatus from '../stores/ApiStatus.js';
 import { Container } from 'flux/utils';
 import ApiUtil from '../ApiUtil.js';
 import Label from './Label.jsx';
@@ -11,36 +12,58 @@ import SubredditActions from '../actions/SubredditActions.js';
 
 class Home extends Component {
   static getStores() {
-    return [PostStore, SubredditStore];
+    return [PostStore, SubredditStore, ApiStatus];
   }
 
   static calculateState() {
     return {
       posts: PostStore.getState(),
       subreddits: SubredditStore.getState(),
+      apistatus: ApiStatus.getState(),
 
       fetchPosts: ApiUtil.fetchPosts
     }
   }
 
-  componentWillMount() {
-  }
-
   constructor(props) {
     super(props);
-    this.state = { newSubreddit: "" };
+    this.state = { newSubreddit: "", lastEntered: "" };
     this.handleInput = this.handleInput.bind(this);
     this.handleSubmission = this.handleSubmission.bind(this);
+  }
+
+  componentWillUpdate() {
   }
 
   handleInput(e) {
     this.setState({ newSubreddit : e.target.value } );
   }
 
+
   handleSubmission(e) {
     e.preventDefault();
-    SubredditActions.addSubreddit(this.state.newSubreddit);
-    this.setState({ newSubreddit : "" });
+    ApiUtil.fetchPosts(this.state.newSubreddit);
+    let lastEntered = this.state.newSubreddit.toLowerCase();
+    this.setState({
+      newSubreddit : "" ,
+      lastEntered: lastEntered
+    });
+  }
+
+  flashMessage () {
+    let flashMessage;
+    if (this.state.lastEntered === "") {
+      flashMessage = "";
+    } else if (this.state.apistatus) {
+      flashMessage = (<span className="bottom-flash bottom-flash-loading">
+        { `Loading ${this.state.lastEntered}` }
+      </span>);
+    } else if (!this.state.subreddits.has(this.state.lastEntered)) {
+      flashMessage = (<span className="bottom-flash bottom-flash-warning">
+        { `There is nothing for ${this.state.lastEntered}` }
+      </span>);
+    };
+    return flashMessage;
   }
 
   render () {
@@ -58,6 +81,8 @@ class Home extends Component {
           }/>
       )
     });
+
+    let flashMessage = this.flashMessage.call(this);
 
     return (
       <div>
@@ -80,6 +105,7 @@ class Home extends Component {
                 placeholder="Enter a subreddit"
                 value={ this.state.newSubreddit }/>
             </div>
+            { flashMessage }
             <div className="one columns">
               <input className="button-primary"  type="submit"  value="Add"/>
             </div>
