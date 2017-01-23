@@ -30,6 +30,7 @@ class Home extends Component {
     this.state = { newSubreddit: "", lastEntered: "" };
     this.handleInput = this.handleInput.bind(this);
     this.handleSubmission = this.handleSubmission.bind(this);
+    this.handleLoadMore = this.handleLoadMore.bind(this);
   }
 
   componentWillUpdate() {
@@ -53,6 +54,10 @@ class Home extends Component {
   handleDeletion(subreddit) {
     this.setState({ lastEntered: "" });
     SubredditActions.removeSubreddit(subreddit);
+  }
+
+  handleLoadMore() {
+    ApiUtil.fetchMorePosts(this.state.posts);
   }
 
   flashMessage () {
@@ -116,6 +121,9 @@ class Home extends Component {
             </div>
             <div className="six columns thin-border header-padding">
               { subreddits }
+            </div>
+            <div className="one columns">
+              <input className="button-primary" type="button" value="Load More" onClick={ this.handleLoadMore } />
             </div>
           </form>
         </div>
