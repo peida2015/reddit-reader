@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import linkLogo from '../../public/link.png';
 import commentLogo from '../../public/chat.png';
 import matureLogo from '../../public/AdultsOnly.png';
-import { Link, browserHistory } from 'react-router';
+import { Link } from 'react-router';
 
 class PostCard extends Component {
   componentWillMount() {
@@ -11,8 +11,7 @@ class PostCard extends Component {
   thumbnailLink (post) {
     let thumbnail;
 
-      // post.thumbnail === "default" || post.thumbnail === "self" || post.thumbnail === "" || post.thumbnail === "image"
-    // check if post.thumbnail a valid url
+    // Check post.thumbnail to see if it's a valid URL and assign URL accordingly
     if (!post.thumbnail.match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/) ) {
       if (post.preview) {
         thumbnail = post.preview.images[0].source.url;
