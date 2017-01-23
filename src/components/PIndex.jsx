@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import PostCard from './PostCard.jsx';
-
+import { browserHistory } from 'react-router';
 
 class PIndex extends Component {
 
-  componentWillMount() {
+  componentWillMount(nextProps) {
     if (this.props.params.subreddits) {
+      // Handle manually entered :subreddits param
       let subreddits = this.parseSubredditsParams(this.props.params.subreddits);
+
       for (let idx in subreddits) {
-        if (subreddits[idx] === "") {
-          continue;
+        // Submit (attempt to add) a new subreddit only if it's not already here
+        if (!this.props.subreddits.has(subreddits[idx])) {
+          this.props.fetchPosts(subreddits[idx], true);
         }
-        this.props.fetchPosts(subreddits[idx], true);
       };
     } else {
       this.props.fetchPosts();
@@ -35,8 +37,17 @@ class PIndex extends Component {
   }
 
   componentWillUpdate(nextProps) {
+    // Default to fetching the HOT listing
     if (nextProps.subreddits.size === 0 && !this.props.apistatus) {
       this.props.fetchPosts();
+    };
+
+    // "Expected" :subreddits URL param : subreddits.join("+");  Update if different.
+    if (nextProps.posts.size === nextProps.subreddits.size) {
+      let subreddits = nextProps.subreddits.toJS();
+      if (subreddits.join("+") !== this.props.params.subreddits) {
+        browserHistory.push(`/index/${subreddits.join("+")}`);
+      }
     }
   }
 
