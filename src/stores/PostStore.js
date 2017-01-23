@@ -14,14 +14,31 @@ class PostStore extends ReduceStore {
   reduce (state, action) {
     switch (action.type) {
       case "HOT_POSTS_RECEIVED":
-        return state.set(action.subreddit, action.posts);
+        if (state.get("HOT")) {
+          return state.set("HOT", { after: action.after,
+          posts: state.get("HOT").posts.concat(action.posts) })
+        } else {
+          let blankMap = state.clear();
+          return blankMap.set("HOT",
+          { posts: action.posts, after: action.after });
+        }
 
       case "POSTS_RECEIVED":
+        let subreddit = action.subreddit.toLowerCase();
         if (state.get("HOT")) {
           let blankMap = state.clear();
-          return blankMap.set(action.subreddit.toLowerCase(), action.posts);
+          return blankMap.set(subreddit,
+            { posts: action.posts, after: action.after });
         } else {
-          return state.set(action.subreddit.toLowerCase(), action.posts);
+          if (state.get(subreddit)) {
+            return state.set(subreddit,
+              { posts: state.get(subreddit).posts.concat(action.posts),
+                after: action.after });
+          } else {
+            return state.set(subreddit,
+              { posts: action.posts,
+                after: action.after });
+          }
         }
 
       case "REMOVE_POSTS":

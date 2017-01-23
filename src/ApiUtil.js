@@ -3,21 +3,33 @@ import * as req from 'd3-request';
 
 let baseURL = "http://www.reddit.com"
 let ApiUtil = {
-  fetchPosts (subreddit = "", groupReq) {
+  fetchPosts (subreddit = "", groupReq, after) {
     ApiActions.requestMade();
+
+    // Closure to include groupReq param to indicate whether it's part of a group request
+    let callback = (function (APIActions, groupParam) {
+      return function (listing) {
+        APIActions.receivePosts(listing, groupParam);
+      };
+    })(ApiActions, groupReq);
 
     if (subreddit === "") {
       req.json(`${baseURL}/hot.json`, ApiActions.receiveHotPosts);
-    } else {
-      // Closure to include groupReq param to indicate whether it's part of a group request
-      let callback = (function (APIActions, groupParam) {
-        return function (listing) {
-          APIActions.receivePosts(listing, groupParam);
-        };
-      })(ApiActions, groupReq);
+    } else if (subreddit === "HOT"){
+      req.json(`${baseURL}/hot.json?limit=30&after=${after}`, ApiActions.receiveHotPosts);
+    } else if (after === undefined) {
+      req.json(`${baseURL}/r/${subreddit}.json?limit=30`, callback);
+    } else if (after !== null){
+      req.json(`${baseURL}/r/${subreddit}.json?limit=30&after=${after}`, callback);
+    };
+  },
 
-      req.json(`${baseURL}/r/${subreddit}.json`, callback);
-    }
+  fetchMorePosts (subreddits) {
+    let subredditsList = subreddits.keys();
+
+    for (let subreddit of subredditsList) {
+      this.fetchPosts(subreddit, true, subreddits.get(subreddit).after);
+    };
   }
 }
 
