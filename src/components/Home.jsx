@@ -66,10 +66,14 @@ class Home extends Component {
   handleSubmission(e) {
     e.preventDefault();
     let lastEntered = this.state.newSubreddit.toLowerCase().replace(/ /g, "");
-    ApiUtil.fetchPosts(lastEntered);
+    this.submitNewSubreddit(lastEntered);
+  }
+
+  submitNewSubreddit(newSubreddit) {
+    ApiUtil.fetchPosts(newSubreddit);
     this.setState({
       newSubreddit : "" ,
-      lastEntered: lastEntered
+      lastEntered: newSubreddit
     });
   }
 
