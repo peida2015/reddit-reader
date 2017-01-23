@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import linkLogo from '../../public/link.png';
 import commentLogo from '../../public/chat.png';
-import { Link } from 'react-router';
+import matureLogo from '../../public/AdultsOnly.png';
+import { Link, browserHistory } from 'react-router';
 
 class PostCard extends Component {
   componentWillMount() {
@@ -10,11 +11,17 @@ class PostCard extends Component {
   thumbnailLink (post) {
     let thumbnail;
 
-    if (post.thumbnail === "default" || "self") {
+      // post.thumbnail === "default" || post.thumbnail === "self" || post.thumbnail === "" || post.thumbnail === "image"
+    // check if post.thumbnail a valid url
+    if (!post.thumbnail.match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/) ) {
       if (post.preview) {
         thumbnail = post.preview.images[0].source.url;
       } else if (post.thumbnail === "default") {
         thumbnail = linkLogo;
+      } else if (post.thumbnail === "image") {
+        thumbnail = post.url;
+      } else if (post.thumbnail === "nsfw"){
+        thumbnail = matureLogo;
       } else {
         thumbnail = commentLogo;
       };
