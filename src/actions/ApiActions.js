@@ -14,7 +14,8 @@ let ApiActions = {
     Dispatcher.dispatch({
       type: "HOT_POSTS_RECEIVED",
       subreddit: "HOT",
-      posts: listing.data.children
+      posts: listing.data.children,
+      after: listing.data.after
     });
 
     Dispatcher.dispatch({
@@ -23,13 +24,13 @@ let ApiActions = {
   },
 
   receivePosts (listing, groupReq) {
-    // debugger
     if (listing !== null) {
       let subreddit = listing.data.children[0].data.subreddit
       Dispatcher.dispatch({
         type: "POSTS_RECEIVED",
         subreddit: subreddit,
-        posts: listing.data.children
+        posts: listing.data.children,
+        after: listing.data.after
       });
 
       SubredditActions.addSubreddit(subreddit);
