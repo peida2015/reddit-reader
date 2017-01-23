@@ -31,20 +31,42 @@ class Home extends Component {
     this.handleInput = this.handleInput.bind(this);
     this.handleSubmission = this.handleSubmission.bind(this);
     this.handleLoadMore = this.handleLoadMore.bind(this);
-  }
-
-  componentWillUpdate() {
+    this.scrollListener = this.scrollListener.bind(this);
+    this.lastLoad = new Date();
   }
 
   handleInput(e) {
     this.setState({ newSubreddit : e.target.value } );
   }
 
+  componentWillMount() {
+    // EventListener for infinite scroll feature.
+    window.addEventListener("scroll", this.scrollListener);
+  }
+
+  componentWillUnMount () {
+    window.removeEventListener("scroll", this.scrollListener);
+  }
+
+  scrollListener(e) {
+    var body = document.body,
+    html = document.documentElement;
+
+    // Get document height across browser
+    var height = Math.max( body.scrollHeight, body.offsetHeight,
+                html.clientHeight, html.scrollHeight, html.offsetHeight);
+
+    // Throttling to prevent handleLoadMore called more than once/second
+    if ((height - window.scrollY < 1000) && (new Date() - this.lastLoad > 1000)) {
+        this.handleLoadMore();
+        this.lastLoad = new Date();
+    };
+  }
 
   handleSubmission(e) {
     e.preventDefault();
-    ApiUtil.fetchPosts(this.state.newSubreddit);
-    let lastEntered = this.state.newSubreddit.toLowerCase();
+    let lastEntered = this.state.newSubreddit.toLowerCase().replace(/ /g, "");
+    ApiUtil.fetchPosts(lastEntered);
     this.setState({
       newSubreddit : "" ,
       lastEntered: lastEntered
