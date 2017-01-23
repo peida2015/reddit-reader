@@ -45,8 +45,8 @@ class PIndex extends Component {
     let postsMap = this.props.posts.values();
     let posts = [];
 
-    for (let postArray of postsMap) {
-      posts = posts.concat(postArray);
+    for (let subredditListing of postsMap) {
+      posts = posts.concat(subredditListing.posts);
     }
 
     posts = posts.map((post)=>{
