@@ -7,10 +7,6 @@ import { Link } from 'react-router';
 
 class PostCard extends Component {
 
-  constructor (props) {
-    super(props);
-  }
-
   thumbnailLink (post) {
     let thumbnail;
 
