@@ -6,7 +6,9 @@ import matureLogo from '../../public/AdultsOnly.png';
 import { Link } from 'react-router';
 
 class PostCard extends Component {
-  componentWillMount() {
+
+  constructor (props) {
+    super(props);
   }
 
   thumbnailLink (post) {
@@ -32,6 +34,13 @@ class PostCard extends Component {
     return thumbnail;
   }
 
+  submitNewSubreddit(subreddit) {
+    // Submit a request only if it's not currently active.
+    if (!this.props.currentSubreddits.has(subreddit)) {
+      this.props.fetchPosts(subreddit);
+    };
+  }
+
   render () {
     let post = this.props.post.data;
     let thumbnail = this.thumbnailLink(post);
@@ -49,12 +58,16 @@ class PostCard extends Component {
           </div>
         </Link>
           <div className="u-pull-left subreddit-label"
-              onClick={ this.props.fetchPosts.bind(undefined, post.subreddit) }>
+              onClick={ this.submitNewSubreddit.bind(this, post.subreddit) }>
             { post.subreddit }
           </div>
           <div className="u-pull-right">
-            <span><img className="vertical-align up-icon" src={upIcon} alt="up"/></span>
-            <span className="vertical-align">{ parseInt(post.ups, 10)-parseInt(post.downs, 10) }</span>
+            <span>
+              <img className="vertical-align up-icon" src={upIcon} alt="up"/>
+            </span>
+            <span className="vertical-align">
+              { parseInt(post.ups, 10)-parseInt(post.downs, 10) }
+            </span>
           </div>
       </div>
     );
