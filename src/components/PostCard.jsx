@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import upIcon from '../../public/up.png';
 import linkLogo from '../../public/link.png';
 import commentLogo from '../../public/chat.png';
 import matureLogo from '../../public/AdultsOnly.png';
@@ -11,7 +12,7 @@ class PostCard extends Component {
   thumbnailLink (post) {
     let thumbnail;
 
-    // Check post.thumbnail to see if it's a valid URL and assign URL accordingly
+    // Check post.thumbnail to see if it's a valid URL and assign URLaccordingly
     if (!post.thumbnail.match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/) ) {
       if (post.preview) {
         thumbnail = post.preview.images[0].source.url;
@@ -41,9 +42,20 @@ class PostCard extends Component {
     return (
       <div className="four columns thin-border post-card-height post-card-margin row-adjustment">
         <Link to={ post.url.replace(/&amp/g, "&").replace(/;/g,"") } target="_blank">
-          <img className="responsive-img" alt={`by: ${post.author}`} src={ thumbnail }/>
-          <div className="centered eighty-percent non-overflow">{post.title}</div>
+          <img className="responsive-img" alt={`by: ${post.author}`}
+                src={ thumbnail }/>
+          <div className="centered eighty-percent non-overflow">
+            {post.title}
+          </div>
         </Link>
+          <div className="u-pull-left subreddit-label"
+              onClick={ this.props.fetchPosts.bind(undefined, post.subreddit) }>
+            { post.subreddit }
+          </div>
+          <div className="u-pull-right">
+            <span><img className="vertical-align up-icon" src={upIcon} alt="up"/></span>
+            <span className="vertical-align">{ parseInt(post.ups, 10)-parseInt(post.downs, 10) }</span>
+          </div>
       </div>
     );
   }

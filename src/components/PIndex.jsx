@@ -20,6 +20,10 @@ class PIndex extends Component {
     }
   }
 
+  componentWillReceiveProps() {
+
+  }
+
   parseSubredditsParams (subredditsParam) {
     let subreddits = subredditsParam.split("+");
     if (subreddits.length > 1) {
@@ -45,7 +49,7 @@ class PIndex extends Component {
     // "Expected" :subreddits URL param : subreddits.join("+");  Update if different.
     if (nextProps.posts.size === nextProps.subreddits.size) {
       let subreddits = nextProps.subreddits.toJS();
-      if (subreddits.join("+") !== this.props.params.subreddits) {
+      if (subreddits.join("+") !== nextProps.params.subreddits) {
         browserHistory.push(`/index/${subreddits.join("+")}`);
       }
     }
@@ -61,7 +65,8 @@ class PIndex extends Component {
     }
 
     posts = posts.map((post)=>{
-      return <PostCard key={ post.data.id } post={post} />
+      return <PostCard key={ post.data.id } post={post}
+        fetchPosts={ this.props.fetchPosts }/>
     })
 
     return (

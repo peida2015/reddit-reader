@@ -481,7 +481,7 @@ there.
 }
 
 .non-overflow {
-  height: 30%;
+  height: 25%;
   overflow: hidden;
 }
 
@@ -525,6 +525,22 @@ there.
 
 .vertically-align {
   vertical-align: middle;
+}
+
+.up-icon {
+  height: 1.5rem;
+  width: auto;
+}
+
+.subreddit-label {
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-family: monospace;
+}
+
+.subreddit-label:hover {
+  cursor: url('./add-cursor2.png'), auto;
+  color: darkgreen;
 }
 
 @keyframes slide-in-out {
