@@ -46,6 +46,7 @@ class PostCard extends Component {
 
     return (
       <div className="four columns thin-border post-card-height post-card-margin row-adjustment">
+        { /* Provide Link to the post's url in a new browser tab.  Can be replaced with a <div> with onClick and use location.assign(url) to keep in the same window but the app will be reloaded */}
         <Link to={ post.url.replace(/&amp/g, "&").replace(/;/g,"") } target="_blank">
           <img className="responsive-img" alt={`by: ${post.author}`}
                 src={ thumbnail }/>
@@ -53,15 +54,16 @@ class PostCard extends Component {
             {post.title}
           </div>
         </Link>
+
           <div className="u-pull-left subreddit-label"
               onClick={ this.submitNewSubreddit.bind(this, post.subreddit) }>
             { post.subreddit }
           </div>
-          <div className="u-pull-right">
+          <div className="u-pull-right upvote">
             <span>
-              <img className="vertical-align up-icon" src={upIcon} alt="up"/>
+              <img className="up-icon" src={upIcon} alt="up"/>
             </span>
-            <span className="vertical-align">
+            <span>
               { parseInt(post.ups, 10)-parseInt(post.downs, 10) }
             </span>
           </div>

@@ -5,7 +5,7 @@ class Label extends Component {
   render () {
     return (
       <span className="small-label">
-        <span>{this.props.subreddit}</span>
+        <span className="small-label">{this.props.subreddit}</span>
         <span className="label-delete" onClick={this.props.removeAction}>x</span>
       </span>
     );
