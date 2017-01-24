@@ -64,8 +64,13 @@ class PIndex extends Component {
       posts = posts.concat(subredditListing.posts);
     }
 
-    posts = posts.map((post)=>{
+    posts = posts.sort((a, b) => {
+      let aNetUps = parseInt(a.data.ups, 10) - parseInt(a.data.downs, 10);
+      let bNetUps = parseInt(b.data.ups, 10) - parseInt(b.data.downs, 10);
+      return bNetUps - aNetUps;
+    }).map((post)=>{
       return <PostCard key={ post.data.id } post={post}
+        currentSubreddits={ this.props.subreddits }
         fetchPosts={ this.props.fetchPosts }/>
     })
 
